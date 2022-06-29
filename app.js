@@ -10,41 +10,33 @@ const app = Vue.createApp({
         async getQuote() {
 
             // Get Random Quote
-            const res = await fetch("https://type.fit/api/quotes")
-            const data = await res.json()
+            const data = await fetch("https://type.fit/api/quotes")
+                                .then(response => response.json())
+                                .catch(error => {console.error("There was a problem with the fetch request", error)})
             const element = data[Math.floor(Math.random()*data.length)];
+            console.log(element);
+
+            this.quote = '"' + element.text + '"'
+            this.author = (author != null) ? "-" + element.author : "- Unknown Author"
+            this.picture = "";
 
             //Get Picture
-            const options = {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': '75b9c833cfmsh5384228b6c17420p12c45ajsna4677f86d813',
-                    'X-RapidAPI-Host': 'contextualwebsearch-websearch-v1.p.rapidapi.com'
-                }
-            };
-            
-            query = element.author.replace(" ","%20")
-            const res2 = await fetch('https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q=' + query + '&pageNumber=1&pageSize=1&autoCorrect=false', options)
-            const data2 = await res2.json()
-
-            //Set Data
-            this.picture = data2.value[0].url
-            this.quote = '"' + element.text + '"'
-            this.author = "-" + element.author
-
-            //Fix Picture
-            var img = document.getElementById("author-picture")
-            console.log(img.clientWidth)
-            console.log(img.clientHeight)
-            if(img.offsetWidth >= img.offsetHeight) {
-                console.log("1")
-                img.style.width = "100%"
-                img.style.height = "auto"
-            } else {
-                console.log("2")
-                img.style.width = "auto"
-                img.style.height = "100%"
+            if(author != null) {
+                query = element.author.replace(" ","%20")
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': '75b9c833cfmsh5384228b6c17420p12c45ajsna4677f86d813',
+                        'X-RapidAPI-Host': 'contextualwebsearch-websearch-v1.p.rapidapi.com'
+                    }
+                };
+                
+                fetch('https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q=' + query + '&pageNumber=1&pageSize=1&autoCorrect=false', options)
+                    .then(response => response.json())
+                    .then(data => {this.picture = data.value[0].url})
+                    .catch(error => {console.error("There was a problem with the fetch request", error)})
             }
+
         }
     }
 
