@@ -17,11 +17,11 @@ const app = Vue.createApp({
             console.log(element);
 
             this.quote = '"' + element.text + '"'
-            this.author = (author != null) ? "-" + element.author : "- Unknown Author"
+            this.author = (element.author != null) ? "- " + element.author : "- Unknown Author"
             this.picture = "";
 
             //Get Picture
-            if(author != null) {
+            if(element.author != null) {
                 query = element.author.replace(" ","%20")
                 const options = {
                     method: 'GET',
