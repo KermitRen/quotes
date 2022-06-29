@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Quotes</title>
+</head>
+<body>
+    <div id="app">
+        <div id="header">
+            <h1>Get Random Quote</h1>
+            <i @click="getQuote()" class="material-symbols-outlined">cached</i>
+        </div>
+        <div id="content">
+            <div id="text-content">
+                <p id="quote"> {{quote}}</p>
+                <p id="author"> {{author}}</p> 
+            </div>
+            <div id="picture-container">
+                <img id="author-picture" :src="picture" :alt="author">
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="app.js"></script>
+</body>
+</html>
